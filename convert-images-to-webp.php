@@ -19,14 +19,11 @@
 
 if( ! defined( 'ABSPATH' ) ) exit;
 
-class Convert_images_to_web{
+class Convert_images_to_webp {
 	var $settings;
 	var $extensions = array( 'jpg', 'jpeg', 'gif', 'png' );
 
 	function __construct(){
-		$this->settings = get_site_option('images_to_webp_settings');
-		var_dump($this->settings);die;
-
 		add_action( 'plugins_loaded', array( $this, 'plugins_loaded' ) );
 		add_filter( 'wp_update_attachment_metadata', array( $this, 'wp_update_attachment_metadata' ), 77, 2 );
 		add_filter( 'wp_content_img_tag', 'replace_existing_image_to_webp_frontend', 10, 3 );
@@ -34,6 +31,25 @@ class Convert_images_to_web{
 
 	function plugins_loaded(){
 		load_plugin_textdomain( 'convert-images-to-webp', FALSE, basename( dirname( __FILE__ ) ) . '/languages/' );
+	}
+
+	function activate(){
+		// first run test
+		include_once 'tests/server.php';
+				
+		// maybe load default settings
+		if( ! $this->settings = get_site_option( 'images_to_webp_settings', 0 ) ){
+			$default_method = array_keys( $methods );
+			$default_method = current( $default_method );
+			$default_options = array(
+				'extensions' => $this->extensions,
+				'webp_quality' => 85,
+				'method' => $default_method,
+				'delete_originals' => 0,
+			);
+			update_site_option( 'images_to_webp_settings', $default_options );
+			$this->settings = $default_options;
+		}
 	}
 
 	function convert_images_to_webp( $file ){
