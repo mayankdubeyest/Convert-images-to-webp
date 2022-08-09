@@ -1,0 +1,59 @@
+# Copyright (C) 2022 EncoreSky Technologies
+# This file is distributed under the same license as the Convert Images to WebP plugin.
+msgid ""
+msgstr ""
+"Project-Id-Version: Convert Images to WebP 1.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/convert-images-to-"
+"webp\n"
+"POT-Creation-Date: 2022-08-09T11:15:50+00:00\n"
+"PO-Revision-Date: 2022-08-09 18:15+0530\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.1\n"
+"X-Domain: convert-images-to-webp\n"
+
+#. Plugin Name of the plugin
+msgid "Convert Images to WebP"
+msgstr "Konvertieren Sie Bilder in WebP"
+
+#. Plugin URI of the plugin
+#. Author URI of the plugin
+msgid "https://www.encoresky.com/"
+msgstr "https://www.encoresky.com/"
+
+#. Description of the plugin
+msgid "Convert JPG, PNG and GIF images to WEBP"
+msgstr "JPG-, PNG- und GIF-Bilder in WEBP konvertieren"
+
+#. Author of the plugin
+msgid "EncoreSky Technologies"
+msgstr "EncoreSky Technologies"
+
+#: tests/server.php:7
+msgid ""
+"Please update your PHP to version 5.6.12 or higher, then try activate "
+"<strong>Images to WebP</strong> again."
+msgstr ""
+"Bitte aktualisieren Sie Ihr PHP auf Version 5.6.12 oder höher und versuchen "
+"Sie dann erneut, <strong>Bilder zu WebP</strong> zu aktivieren."
+
+#: tests/server.php:12
+msgid ""
+"Please install GD or Imagick on your server, then try activate "
+"<strong>Convert Images to WebP</strong> again."
+msgstr ""
+"Bitte installieren Sie GD oder Imagick auf Ihrem Server und versuchen Sie "
+"dann erneut, <strong>Bilder in WebP konvertieren</strong> zu aktivieren."
+
+#: tests/server.php:39
+msgid ""
+"Please enable WebP in GD or Imagick on your server, then try activate "
+"<strong>Images to WebP</strong> again."
+msgstr ""
+"Bitte aktivieren Sie WebP in GD oder Imagick auf Ihrem Server und versuchen "
+"Sie dann erneut, <strong>Bilder zu WebP</strong> zu aktivieren."

@@ -10,7 +10,7 @@
  * Requires PHP: 7.0
  * Tested up to: 6.0
  * 
- * Text Domain: convert-convert-images-to-webp
+ * Text Domain: convert-images-to-webp
  * Domain Path: /languages/
  *
  * @package ConvertImagestoWebP
@@ -24,19 +24,26 @@ class Convert_images_to_webp {
 	var $extensions = array( 'jpg', 'jpeg', 'gif', 'png' );
 
 	function __construct(){
+		
+		$this->settings = get_site_option('images_to_webp_settings');
+
 		add_action( 'plugins_loaded', array( $this, 'plugins_loaded' ) );
 		add_filter( 'wp_update_attachment_metadata', array( $this, 'wp_update_attachment_metadata' ), 77, 2 );
 		add_filter( 'wp_content_img_tag', 'replace_existing_image_to_webp_frontend', 10, 3 );
 	}
 
 	function plugins_loaded(){
-		load_plugin_textdomain( 'convert-images-to-webp', FALSE, basename( dirname( __FILE__ ) ) . '/languages/' );
+
+		$locale = apply_filters('plugin_locale', get_locale(), 'convert-images-to-webp');
+		$text_domain_to_load = 'convert-images-to-webp-'.$locale;
+		//load_textdomain('convert-images-to-webp', WP_PLUGIN_DIR . "/convert-images-to-webp/languages/$text_domain_to_load.mo");
+		load_textdomain('convert-images-to-webp', trailingslashit(dirname(__FILE__)) . "/languages/$text_domain_to_load.mo");
+		//load_plugin_textdomain( 'convert-images-to-webp', FALSE, basename( dirname( __FILE__ ) ) . '/languages/' );
 	}
 
 	function activate(){
 		// first run test
 		include_once 'tests/server.php';
-				
 		// maybe load default settings
 		if( ! $this->settings = get_site_option( 'images_to_webp_settings', 0 ) ){
 			$default_method = array_keys( $methods );
@@ -74,6 +81,7 @@ class Convert_images_to_webp {
 	}
 
 	function wp_update_attachment_metadata( $data, $attachmentId ){
+		
 			if( $data && isset( $data['file'] ) && isset( $data['sizes'] ) ){
 				$upload = wp_upload_dir();
 				$path = $upload['basedir'] . '/' . dirname( $data['file'] ) . '/';
@@ -124,9 +132,9 @@ register_deactivation_hook( __FILE__, 'deactivate_convert_images_to_web' );
 register_uninstall_hook( __FILE__, 'uninstall_convert_images_to_web' );
 
 function deactivate_convert_images_to_web(){
-	
+
 }
 
 function uninstall_convert_images_to_web(){
-	
+	delete_site_option('images_to_webp_settings');
 }
