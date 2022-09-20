@@ -1,8 +1,8 @@
 <?php
 /*
- * Plugin Name: Convert Images to WebP
+ * Plugin Name: Convert Images to Web
  * Plugin URI: https://www.encoresky.com/
- * Description: Convert JPG, PNG and GIF images to WEBP
+ * Description: Converting JPG, PNG and GIF images to WEBP
  * Version: 1.0.0
  * Author: EncoreSky Technologies
  * Author URI: https://www.encoresky.com/
@@ -29,16 +29,14 @@ class Convert_images_to_webp {
 
 		add_action( 'plugins_loaded', array( $this, 'plugins_loaded' ) );
 		add_filter( 'wp_update_attachment_metadata', array( $this, 'wp_update_attachment_metadata' ), 77, 2 );
-		add_filter( 'wp_content_img_tag', 'replace_existing_image_to_webp_frontend', 10, 3 );
+		add_filter( 'wp_content_img_tag', array($this,'replace_existing_image_to_webp_frontend'), 10, 3 );
 	}
 
 	function plugins_loaded(){
 
 		$locale = apply_filters('plugin_locale', get_locale(), 'convert-images-to-webp');
 		$text_domain_to_load = 'convert-images-to-webp-'.$locale;
-		//load_textdomain('convert-images-to-webp', WP_PLUGIN_DIR . "/convert-images-to-webp/languages/$text_domain_to_load.mo");
 		load_textdomain('convert-images-to-webp', trailingslashit(dirname(__FILE__)) . "/languages/$text_domain_to_load.mo");
-		//load_plugin_textdomain( 'convert-images-to-webp', FALSE, basename( dirname( __FILE__ ) ) . '/languages/' );
 	}
 
 	function activate(){
