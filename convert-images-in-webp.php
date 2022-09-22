@@ -16,7 +16,48 @@
 
 /**
  * To prevent user to directly access your file.
- */ 
+ */ /**
+		* @var     object
+		* @access  private
+		* @since   1.0.0
+		*/
+		private static $_instance = null;
+
+		/**
+		* @var     string
+		* @access  public
+		* @since   1.0.0
+		*/
+		public $plugin_prefix = 'eur';
+
+		/**
+		 * The unique identifier of this plugin.
+		 *
+		 * @since    1.0.0
+		 * @access   protected
+		 * @var      string    $plugin_name    The string used to uniquely identify this plugin.
+		 */
+		protected $plugin_name;
+
+		/**
+		 * The current version of the plugin.
+		 *
+		 * @since    1.0.0
+		 * @access   protected
+		 * @var      string    $version    The current version of the plugin.
+		 */
+		protected $version;
+		
+		/**
+		 * Define the core functionality of the plugin.
+		 *
+		 * Set the plugin name and the plugin version that can be used throughout the plugin.
+		 * Load the dependencies, define the locale, and set the hooks for the admin area and
+		 * the public-facing side of the site.
+		 *$file
+		 * @since    1.0.0
+		 */
+		public function __c
 
 if( ! defined( 'ABSPATH' ) ) exit;
 
@@ -85,7 +126,7 @@ class Convert_images_in_webp {
 
 	function activate(){
 		// first run test
-		include_once 'includes/tests/server-lybrary-check.php';
+		include_once 'includes/tests/server-library-check.php';
 		// maybe load default settings
 		if( ! $this->settings = get_site_option( 'images_to_webp_settings', 0 ) ){
 			$default_method = array_keys( $methods );
@@ -98,13 +139,14 @@ class Convert_images_in_webp {
 			);
 			update_site_option( 'images_to_webp_settings', $default_options );
 			$this->settings = $default_options;
-		}
+		}	
 	}
 	/**
          * Convert images in webp format
 	*/
 
 	function convert_images_in_webp( $file ){
+		var_dump($file);
 		if( is_file( $file ) ){
 			$image_extension = pathinfo( $file, PATHINFO_EXTENSION );
 			if( in_array( $image_extension, $this->settings['extensions'] ) ){
