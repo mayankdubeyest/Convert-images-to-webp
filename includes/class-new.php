@@ -1,61 +1,5 @@
-<?php
-/*
- * Plugin Name: Convert Images In Webp
- * Plugin URI: https://www.encoresky.com/
- * Description: Converting JPG, PNG and GIF images to WEBP
- * Version: 1.0.0
- * Author: EncoreSky Technologies
- * Requires at least: 5.0
- * Requires PHP: 7.0
- * Tested up to: 6.0.2
- * Text Domain: convert-images-in-webp
- * Domain Path: /languages/
- * @package ConvertImagesinWebP
- * @author encoresky.com
-*/
-
-/**
- * To prevent user to directly access your file.
- */ 
-
-if( ! defined( 'ABSPATH' ) ) exit;
-
-/**
- * Current plugin version.
- * Start at version 1.0.0
- * 
- */
-
-define( 'CONVERT_IMAGES_IN_WEBP', '1.0.0' );
-
-
-/**
- * Callback function for activation hook
- * 
- */ 
-function activate_convert_images_in_web() {
-    
-}
-/**
- * Callback function for deactivation hook
- * 
- */ 
-function deactivate_convert_images_in_web(){
-
-}
-/**
- * Callback function for uninstall hook
- */ 
-function uninstall_convert_images_in_web(){
-	delete_site_option('image_to_webp_settings');
-}
-
-/**
- * The class that defines the core plugin code.
- * */
-if( ! class_exists( 'Convert_images_in_webp' ) ) {
-
-class Convert_images_in_webp {
+<?php 
+    class Convert_images_in_webp {
 	var $settings;
 	var $extensions = array( 'jpg', 'jpeg', 'gif', 'png' );
 
@@ -80,12 +24,11 @@ class Convert_images_in_webp {
 	}
 
 	/**
-         * Function to include methods for image optimization
+         * Fonction for checking php version and 
 	*/
-
 	function activate(){
 		// first run test
-		include_once 'includes/tests/server-lybrary-check.php';
+		include_once 'includes/tests/server-lybrary-test.php';
 		// maybe load default settings
 		if( ! $this->settings = get_site_option( 'images_to_webp_settings', 0 ) ){
 			$default_method = array_keys( $methods );
@@ -100,13 +43,16 @@ class Convert_images_in_webp {
 			$this->settings = $default_options;
 		}
 	}
+
 	/**
          * Convert images in webp format
 	*/
-
 	function convert_images_in_webp( $file ){
+		// var_dump($file);
+		// die($file);
 		if( is_file( $file ) ){
 			$image_extension = pathinfo( $file, PATHINFO_EXTENSION );
+			//  var_dump($image_extension); 
 			if( in_array( $image_extension, $this->settings['extensions'] ) ){
 				require_once 'includes/methods/method-' . $this->settings['method'] . '.php';
 				$convert = new webp_converter();
@@ -128,7 +74,6 @@ class Convert_images_in_webp {
 	/**
          * Generate webp formate for all sizes of images in uploads folder.
 	*/
-
 	function wp_update_attachment_metadata( $data, $attachmentId ){
 		
 			if( $data && isset( $data['file'] ) && isset( $data['sizes'] ) ){
@@ -141,9 +86,11 @@ class Convert_images_in_webp {
 					if( in_array( $url, $sizes ) ) continue;
 					$sizes[ $key ] = $url;
 				}
+
 				$sizes = apply_filters( 'citw_sizes', $sizes, $attachmentId );
 
 				foreach( $sizes as $size ){
+					// echo $size;
 					if( ! file_exists( $size . '.webp' ) ){
 						$this->convert_images_in_webp( $size );
 					}
@@ -167,8 +114,8 @@ class Convert_images_in_webp {
 		$metadata = wp_get_attachment_metadata($attachment_id);
 		preg_match( '@src="([^"]+)"@' , $filtered_image, $match );
 		$src = array_pop($match);
-	    $image_name = basename($src);
-		if(strpos( $image_name,$webp) === false) {
+        ECHO $match;
+		if(strpos($src,$webp) === false) {
 			$upload_dir   = wp_upload_dir();
 			$web_url = $upload_dir['basedir'].'/'.$metadata['file'].'.webp';
 			if(file_exists($web_url)) {
@@ -179,23 +126,7 @@ class Convert_images_in_webp {
 		return $filtered_image;
 	}
 
-	}
 }
 
 $convert_images_in_webp = new Convert_images_in_webp();
 
-
-/**
- * The code that runs during plugin activation.
- */
-register_activation_hook( __FILE__, array( $convert_images_in_webp, 'activate' ) );
-
-/**
- * The code that runs during plugin deactivation.
- */
-register_deactivation_hook( __FILE__, 'deactivate_convert_images_in_web' );
-
-/**
- * The code that runs during plugin uninstalation.
- */
-register_uninstall_hook( __FILE__, 'uninstall_convert_images_in_web' );
