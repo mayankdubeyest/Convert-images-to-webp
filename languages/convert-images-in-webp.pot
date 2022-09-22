@@ -1,44 +1,51 @@
 # Copyright (C) 2022 EncoreSky Technologies
-# This file is distributed under the same license as the Convert Images to WebP plugin.
+# This file is distributed under the same license as the Convert Images In Webp plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Convert Images to WebP 1.0.0\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/convert-images-to-webp\n"
+"Project-Id-Version: Convert Images In Webp 1.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/convert-images-in-webp\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-08-09T11:15:50+00:00\n"
+"POT-Creation-Date: 2022-09-22T15:04:32+05:30\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.6.0\n"
-"X-Domain: convert-images-to-webp\n"
+"X-Domain: convert-images-in-webp\n"
 
 #. Plugin Name of the plugin
-msgid "Convert Images to WebP"
+msgid "Convert Images In Webp"
 msgstr ""
 
 #. Plugin URI of the plugin
-#. Author URI of the plugin
 msgid "https://www.encoresky.com/"
 msgstr ""
 
 #. Description of the plugin
-msgid "Convert JPG, PNG and GIF images to WEBP"
+msgid "Converting JPG, PNG and GIF images to WEBP"
 msgstr ""
 
 #. Author of the plugin
 msgid "EncoreSky Technologies"
 msgstr ""
 
-#: tests/server.php:7
+#: includes/tests/server-lybrary-test.php:14
 msgid "Please update your PHP to version 5.6.12 or higher, then try activate <strong>Images to WebP</strong> again."
 msgstr ""
 
-#: tests/server.php:12
+#: includes/tests/server-lybrary-test.php:21
 msgid "Please install GD or Imagick on your server, then try activate <strong>Convert Images to WebP</strong> again."
 msgstr ""
 
-#: tests/server.php:39
+#: includes/tests/server-lybrary-test.php:33
+msgid "Imagick"
+msgstr ""
+
+#: includes/tests/server-lybrary-test.php:49
+msgid "GD"
+msgstr ""
+
+#: includes/tests/server-lybrary-test.php:54
 msgid "Please enable WebP in GD or Imagick on your server, then try activate <strong>Images to WebP</strong> again."
 msgstr ""
