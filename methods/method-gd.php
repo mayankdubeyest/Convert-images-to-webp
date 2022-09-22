@@ -1,7 +1,15 @@
 <?php
 
+/**
+ * To prevent user to directly access your file.
+ */ 
+
 if( ! defined( 'ABSPATH' ) ) exit;
 
+/**
+* Class for GD image optimaziotn lybrary
+*
+*/
 class webp_converter{
 
 	public function convertImage( $path, $quality ){

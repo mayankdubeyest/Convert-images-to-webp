@@ -1,4 +1,4 @@
-===  Easy User Registration ===
+===  Convert Images In Webp ===
 Contributors: encoresky
 Requires at least: 5.0
 Tested up to: 6.0.2

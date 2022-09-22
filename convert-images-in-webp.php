@@ -1,25 +1,82 @@
 <?php
 /*
- * Plugin Name: Convert Images to Web
+ * Plugin Name: Convert Images In Webp
  * Plugin URI: https://www.encoresky.com/
  * Description: Converting JPG, PNG and GIF images to WEBP
  * Version: 1.0.0
  * Author: EncoreSky Technologies
- * Author URI: https://www.encoresky.com/
  * Requires at least: 5.0
  * Requires PHP: 7.0
- * Tested up to: 6.0
- * 
- * Text Domain: convert-images-to-webp
+ * Tested up to: 6.0.2
+ * Text Domain: convert-images-in-webp
  * Domain Path: /languages/
- *
- * @package ConvertImagestoWebP
+ * @package ConvertImagesinWebP
  * @author encoresky.com
 */
 
+
+/**
+ * To prevent user to directly access your file.
+ */ 
+
 if( ! defined( 'ABSPATH' ) ) exit;
 
-class Convert_images_to_webp {
+/**
+ * Current plugin version.
+ * Start at version 1.0.0
+ * 
+ */
+
+define( 'CONVERT_IMAGES_IN_WEBP', '1.0.0' );
+
+
+/**
+ * Callback function for activation hook
+ * 
+ */ 
+function activate_convert_images_in_web() {
+    
+}
+/**
+ * Callback function for deactivation hook
+ * 
+ */ 
+function deactivate_convert_images_in_web(){
+
+}
+/**
+ * Callback function for uninstall hook
+ * 
+ */ 
+function uninstall_convert_images_in_web(){
+	delete_site_option('image_in_webp_settings');
+}
+
+
+/**
+ * The code that runs during plugin activation.
+ * 
+ */
+register_activation_hook( __FILE__, array( $convert_image_in_webp, 'activate' ) );
+
+/**
+ * The code that runs during plugin deactivation.
+ * 
+ */
+register_deactivation_hook( __FILE__, 'deactivate_convert_images_in_web' );
+
+/**
+ * The code that runs during plugin uninstalation.
+ * 
+ */
+register_uninstall_hook( __FILE__, 'uninstall_convert_images_in_web' );
+
+
+/**
+ * The class that defines the core plugin code.
+ * */
+
+class Convert_images_in_webp {
 	var $settings;
 	var $extensions = array( 'jpg', 'jpeg', 'gif', 'png' );
 
@@ -29,16 +86,23 @@ class Convert_images_to_webp {
 
 		add_action( 'plugins_loaded', array( $this, 'plugins_loaded' ) );
 		add_filter( 'wp_update_attachment_metadata', array( $this, 'wp_update_attachment_metadata' ), 77, 2 );
-		add_filter( 'wp_content_img_tag', array($this,'replace_existing_image_to_webp_frontend'), 10, 3 );
+		add_filter( 'wp_content_img_tag', array($this,'replace_existing_image_in_webp_frontend'), 10, 3 );
 	}
+
+	/**
+         * Plugin textdomain loader
+	*/
 
 	function plugins_loaded(){
 
-		$locale = apply_filters('plugin_locale', get_locale(), 'convert-images-to-webp');
-		$text_domain_to_load = 'convert-images-to-webp-'.$locale;
-		load_textdomain('convert-images-to-webp', trailingslashit(dirname(__FILE__)) . "/languages/$text_domain_to_load.mo");
+		$locale = apply_filters('plugin_locale', get_locale(), 'convert-images-in-webp');
+		$text_domain_to_load = 'convert-images-in-webp-'.$locale;
+		load_textdomain('convert-images-in-webp', trailingslashit(dirname(__FILE__)) . "/languages/$text_domain_to_load.mo");
 	}
 
+	/**
+         * Fonction for checking php version and 
+	*/
 	function activate(){
 		// first run test
 		include_once 'tests/server.php';
@@ -57,9 +121,13 @@ class Convert_images_to_webp {
 		}
 	}
 
-	function convert_images_to_webp( $file ){
+	/**
+         * Convert images in webp format
+	*/
+	function convert_images_in_webp( $file ){
 		if( is_file( $file ) ){
 			$image_extension = pathinfo( $file, PATHINFO_EXTENSION );
+			
 			if( in_array( $image_extension, $this->settings['extensions'] ) ){
 				require_once 'methods/method-' . $this->settings['method'] . '.php';
 				$convert = new webp_converter();
@@ -78,6 +146,9 @@ class Convert_images_to_webp {
 		return false;
 	}
 
+	/**
+         * Generate webp formate for all sizes of images in uploads folder.
+	*/
 	function wp_update_attachment_metadata( $data, $attachmentId ){
 		
 			if( $data && isset( $data['file'] ) && isset( $data['sizes'] ) ){
@@ -95,7 +166,7 @@ class Convert_images_to_webp {
 
 				foreach( $sizes as $size ){
 					if( ! file_exists( $size . '.webp' ) ){
-						$this->convert_images_to_webp( $size );
+						$this->convert_images_in_webp( $size );
 					}
 				}
 			}
@@ -103,7 +174,10 @@ class Convert_images_to_webp {
 		return $data;
 	}
 
-	function replace_existing_image_to_webp_frontend( $filtered_image, $context, $attachment_id ) {
+	/**
+         * Replace frontend rendered images with new webp images.
+	*/
+	function replace_existing_image_in_webp_frontend( $filtered_image, $context, $attachment_id ) {
 		$url  = wp_get_attachment_url($attachment_id);
 		$ext = pathinfo(
 			parse_url($url, PHP_URL_PATH), 
@@ -111,6 +185,7 @@ class Convert_images_to_webp {
 		);
 		$webp = 'webp';
 		$metadata = wp_get_attachment_metadata($attachment_id);
+
 		if(strpos($filtered_image,$webp) === false) {
 			$upload_dir   = wp_upload_dir();
 			$web_url = $upload_dir['basedir'].'/'.$metadata['file'].'.webp';
@@ -118,21 +193,16 @@ class Convert_images_to_webp {
 				$filtered_image = str_replace( $ext, $ext.'.webp', $filtered_image );
 			}
 		}
+
 		return $filtered_image;
 	}
 
 }
 
-$convert_images_to_webp = new Convert_images_to_webp();
+$convert_images_in_webp = new Convert_images_in_webp();
 
-register_activation_hook( __FILE__, array( $convert_images_to_webp, 'activate' ) );
-register_deactivation_hook( __FILE__, 'deactivate_convert_images_to_web' );
-register_uninstall_hook( __FILE__, 'uninstall_convert_images_to_web' );
 
-function deactivate_convert_images_to_web(){
 
-}
 
-function uninstall_convert_images_to_web(){
-	delete_site_option('images_to_webp_settings');
-}
+
+

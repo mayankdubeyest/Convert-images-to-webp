@@ -1,6 +1,15 @@
 <?php
 
+/**
+ * To prevent user to directly access your file.
+ */ 
+
 if( ! defined( 'ABSPATH' ) ) exit;
+
+/**
+* Class for Imagick image optimaziotn lybrary
+*
+*/
 
 class webp_converter{
 
