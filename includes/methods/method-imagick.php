@@ -17,8 +17,10 @@ class webp_converter{
 		ini_set( 'memory_limit', '1G' );
 		set_time_limit( 120 );
 
-		$output = $path . '.webp';
-
+		$image_extension = pathinfo( $path, PATHINFO_EXTENSION );
+	    $path_with_webp_ext = str_replace($image_extension, "webp", $path);
+		$output =   $path_with_webp_ext;
+		
 		$image = new Imagick( $path );
 		$image->setImageFormat('WEBP');
 		$image->stripImage();

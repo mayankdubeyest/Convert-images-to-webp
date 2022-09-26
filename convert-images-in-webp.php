@@ -106,11 +106,9 @@ class Convert_images_in_webp {
 	*/
 
 	function convert_images_in_webp( $file ){
-		// var_dump($file);
-		// die($file);
 		if( is_file( $file ) ){
+
 			$image_extension = pathinfo( $file, PATHINFO_EXTENSION );
-			//  var_dump($image_extension); 
 			if( in_array( $image_extension, $this->settings['extensions'] ) ){
 				require_once 'includes/methods/method-' . $this->settings['method'] . '.php';
 				$convert = new webp_converter();
@@ -149,7 +147,6 @@ class Convert_images_in_webp {
 				$sizes = apply_filters( 'citw_sizes', $sizes, $attachmentId );
 
 				foreach( $sizes as $size ){
-					// echo $size;
 					if( ! file_exists( $size . '.webp' ) ){
 						$this->convert_images_in_webp( $size );
 					}
@@ -173,12 +170,12 @@ class Convert_images_in_webp {
 		$metadata = wp_get_attachment_metadata($attachment_id);
 		preg_match( '@src="([^"]+)"@' , $filtered_image, $match );
 		$src = array_pop($match);
-	     $image_name = basename($src);
-		if(strpos( $image_name,$webp) === false) {
+		$image_ext = pathinfo($src,PATHINFO_EXTENSION);
+		if($image_ext !== $webp) {
 			$upload_dir   = wp_upload_dir();
-			$web_url = $upload_dir['basedir'].'/'.$metadata['file'].'.webp';
+			$web_url =	str_replace($ext,"webp",$upload_dir['basedir'].'/'.$metadata['file']);
 			if(file_exists($web_url)) {
-				$filtered_image = str_replace( $ext, $ext.'.webp', $filtered_image );
+				$filtered_image = str_replace( $ext, 'webp', $filtered_image );
 			}
 		}
        
