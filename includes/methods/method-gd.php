@@ -17,8 +17,6 @@ class webp_converter{
 		set_time_limit( 120 );
 
 		$output = $path . '.webp';
-		echo $output;
-		
 		$image_extension = pathinfo( $path, PATHINFO_EXTENSION );
 		$methods = array(
 			'jpg' => 'imagecreatefromjpeg',

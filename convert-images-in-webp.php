@@ -16,8 +16,8 @@
 
 /**
  * To prevent user to directly access your file.
- 
-*/
+ */ 
+
 if( ! defined( 'ABSPATH' ) ) exit;
 
 /**
@@ -50,10 +50,10 @@ function uninstall_convert_images_in_web(){
 	delete_site_option('image_to_webp_settings');
 }
 
+
 /**
  * The class that defines the core plugin code.
  * */
-if( ! class_exists( 'Convert_images_in_webp' ) ) {
 
 class Convert_images_in_webp {
 	var $settings;
@@ -80,12 +80,12 @@ class Convert_images_in_webp {
 	}
 
 	/**
-         * Function to include methods for image optimization
+         * Fonction for checking php version and 
 	*/
 
 	function activate(){
 		// first run test
-		include_once 'includes/tests/server-library-check.php';
+		include_once 'includes/tests/server-lybrary-test.php';
 		// maybe load default settings
 		if( ! $this->settings = get_site_option( 'images_to_webp_settings', 0 ) ){
 			$default_method = array_keys( $methods );
@@ -98,16 +98,19 @@ class Convert_images_in_webp {
 			);
 			update_site_option( 'images_to_webp_settings', $default_options );
 			$this->settings = $default_options;
-		}	
+		}
 	}
+
 	/**
          * Convert images in webp format
 	*/
 
 	function convert_images_in_webp( $file ){
-		var_dump($file);
+		// var_dump($file);
+		// die($file);
 		if( is_file( $file ) ){
 			$image_extension = pathinfo( $file, PATHINFO_EXTENSION );
+			//  var_dump($image_extension); 
 			if( in_array( $image_extension, $this->settings['extensions'] ) ){
 				require_once 'includes/methods/method-' . $this->settings['method'] . '.php';
 				$convert = new webp_converter();
@@ -142,9 +145,11 @@ class Convert_images_in_webp {
 					if( in_array( $url, $sizes ) ) continue;
 					$sizes[ $key ] = $url;
 				}
+
 				$sizes = apply_filters( 'citw_sizes', $sizes, $attachmentId );
 
 				foreach( $sizes as $size ){
+					// echo $size;
 					if( ! file_exists( $size . '.webp' ) ){
 						$this->convert_images_in_webp( $size );
 					}
@@ -168,7 +173,7 @@ class Convert_images_in_webp {
 		$metadata = wp_get_attachment_metadata($attachment_id);
 		preg_match( '@src="([^"]+)"@' , $filtered_image, $match );
 		$src = array_pop($match);
-	    $image_name = basename($src);
+	     $image_name = basename($src);
 		if(strpos( $image_name,$webp) === false) {
 			$upload_dir   = wp_upload_dir();
 			$web_url = $upload_dir['basedir'].'/'.$metadata['file'].'.webp';
@@ -180,10 +185,10 @@ class Convert_images_in_webp {
 		return $filtered_image;
 	}
 
-	}
 }
 
 $convert_images_in_webp = new Convert_images_in_webp();
+
 
 
 /**
