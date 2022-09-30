@@ -1,12 +1,8 @@
 <?php
-
-
 /**
  * To prevent user to directly access your file.
  */ 
-
 if( ! defined( 'ABSPATH' ) ) exit;
-
 // Check for required PHP version
 
 if( version_compare( PHP_VERSION, '5.6.12', '<' ) ){
