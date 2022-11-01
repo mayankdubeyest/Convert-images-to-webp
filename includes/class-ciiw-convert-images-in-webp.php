@@ -1,5 +1,4 @@
 <?php 
-
 /**
  * The class that defines the core plugin code.
  * */
@@ -35,9 +34,8 @@ function ciiw_plugins_loaded(){
 }
 
 /**
-     * Fonction for checking php version and 
+     * Function for checking php version and GD or Imagick libraries presents in php server
 */
-
 
 function ciiw_activate(){
     // first run test

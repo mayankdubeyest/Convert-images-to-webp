@@ -19,7 +19,6 @@ if( ! extension_loaded('gd') && ! extension_loaded('imagick') ){
 
 // Check if Imagick lybrary presents in php server
 
-
 $methods = array();
 
 if( extension_loaded('imagick') ){
@@ -32,7 +31,6 @@ if( extension_loaded('imagick') ){
 }
 
 // Check if GD lybrary presents in php server
-
 
 if(
 	function_exists('imagecreatefromjpeg') &&

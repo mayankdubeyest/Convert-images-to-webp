@@ -7,7 +7,7 @@ Stable tag: 1.0.0
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
-A simple plugin for converting images to webp and render webp formate images in frontend.
+A simple plugin for converting images in webp and render webp formate images in frontend.
 
 == Description ==
 
@@ -15,7 +15,7 @@ A simple plugin for converting images to webp (when uploading) and this plugin a
 
 A free, lightweight plugin and easy to use plugin for converting images to webp is ready for you. 
 
-For basic usage, it just need to install in your Wordpress.
+For basic usage, it just need to install and activate in your Wordpress.
 
 == Installation ==
 
